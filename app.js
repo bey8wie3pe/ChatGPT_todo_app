@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
   }
 
 	//すべてのタスクを取得
-  connection.query('SELECT * FROM tasks', (err, results) => {
+	connection.query('SELECT * FROM tasks WHERE user_id = ?', [req.session.userId], (err, results) => {
     if (err) throw err;
     res.render('index', { tasks: results });
   });
@@ -58,7 +58,9 @@ app.get('/login', (req, res) => {
 //タスク追加処理
 app.post('/add', (req, res) => {
   const taskName = req.body.taskName;
-  connection.query('INSERT INTO tasks (task_name) VALUES (?)', [taskName], (err, results) => {
+	const userId = req.session.userId;
+	console.log(userId);
+	connection.query('INSERT INTO tasks (task_name, user_id) VALUES (?, ?)', [taskName, userId], (err, results)=> {
     if (err) throw err;
     res.redirect('/');
   });
