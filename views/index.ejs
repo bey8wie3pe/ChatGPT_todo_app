@@ -10,10 +10,11 @@
     <h1 class="mb-4">TODOアプリ</h1>
 		    <div class="card mt-4">
       <div class="card-body">
-        <h2 class="card-title mb-4">新しいタスクを追加</h2>
-        <form action="/add" method="post">
+        <h2 id="" class="card-title mb-4">新しいタスクを追加</h2>
+				<form action="/add" method="post" onsubmit="return validateForm()">
+
           <div class="form-group">
-            <input class="form-control" type="text" name="taskName" placeholder="タスク名" required>
+            <input id="taskNameInput" class="form-control" type="text" name="taskName" placeholder="タスク名" required>
           </div>
           <button class="btn btn-primary">追加</button>
         </form>
@@ -26,7 +27,7 @@
           <% for(let i = 0; i < tasks.length; i++) { %>
             <li class="list-group-item">
               <%= tasks[i].task_name %>
-              <small class="text-muted ml-3"><%= new Date(tasks[i].time).toLocaleString() %></small>
+              <small class="text-muted ml-3"><%= new Date(tasks[i].time).toLocaleString() %>に追加</small>
               <form class="float-right" action="/delete" method="post">
                 <input type="hidden" name="taskId" value="<%= tasks[i].id %>">
                 <button class="btn btn-danger">削除</button>
